@@ -1,0 +1,80 @@
+site_name: CIMP
+site_url: https://cimpai.com
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: grey
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: grey
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+  font:
+    text: Roboto
+    code: Roboto Mono
+
+nav:
+  - Home: index.md
+  - Docs:
+    - docs/README.md
+    - docs/CANON.md
+    - docs/GOVERNANCE.md
+    - docs/concepts/
+    - docs/lifecycle/
+    - docs/philosophy/
+  - Practices:
+    - practices/README.md
+    - practices/writing-intent.md
+    - practices/defining-scope.md
+    - practices/identifying-constraints.md
+    - practices/kill-criteria.md
+    - practices/recording-decisions.md
+    - practices/execution-plan.md
+    - practices/observation-plan.md
+    - practices/templates/
+  - Examples: examples/
+  - Governance:
+    - governance/code_of_conduct.md
+    - governance/security.md
+    - governance/contributing.md
+    - governance/license.md
+    - governance/roadmap.md
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - admonition
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - md_in_html
+
+plugins:
+  - search
+  - git-revision-date-localized:
+      enable_creation_date: true
+      fallback_to_build_date: true
+
+strict: true

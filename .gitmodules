@@ -1,0 +1,6 @@
+[submodule "docs/docs"]
+	path = docs/docs
+	url = https://github.com/cimpai/cimp
+[submodule "docs/practices"]
+	path = docs/practices
+	url = https://github.com/cimpai/cimp-practices
