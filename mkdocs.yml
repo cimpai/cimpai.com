@@ -3,16 +3,17 @@ site_url: https://cimpai.com
 
 theme:
   name: material
+  custom_dir: docs/overrides
   palette:
     - scheme: default
       primary: grey
-      accent: blue
+      accent: grey
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
     - scheme: slate
       primary: grey
-      accent: blue
+      accent: grey
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
@@ -23,9 +24,18 @@ theme:
     - navigation.top
     - search.suggest
     - search.highlight
+    - content.code.copy
+    - content.code.annotate
   font:
     text: Roboto
     code: Roboto Mono
+  logo: assets/favicon-96x96.png
+  favicon: assets/favicon.ico
+  icon:
+    repo: fontawesome/brands/github
+
+extra_css:
+  - assets/extra.css
 
 nav:
   - Home: index.md
@@ -33,26 +43,54 @@ nav:
     - docs/README.md
     - docs/CANON.md
     - docs/GOVERNANCE.md
-    - docs/concepts/
-    - docs/lifecycle/
-    - docs/philosophy/
+    - docs/BRANDING.md
+    - Core Concepts:
+      - docs/docs/concepts/intent.md
+      - docs/docs/concepts/scope.md
+      - docs/docs/concepts/constraints.md
+      - docs/docs/concepts/change.md
+      - docs/docs/concepts/decisions.md
+      - docs/docs/concepts/incident.md
+      - docs/docs/concepts/remediation.md
+      - docs/docs/concepts/kill-criteria.md
+      - docs/docs/concepts/architecture-memory.md
+    - Lifecycles:
+      - docs/docs/lifecycle/change-lifecycle.md
+      - docs/docs/lifecycle/incident-lifecycle.md
+    - Philosophy:
+      - docs/docs/philosophy/what-cimp-is-not.md
+      - docs/docs/philosophy/why-changes-fail.md
   - Practices:
     - practices/README.md
-    - practices/writing-intent.md
-    - practices/defining-scope.md
-    - practices/identifying-constraints.md
-    - practices/kill-criteria.md
-    - practices/recording-decisions.md
-    - practices/execution-plan.md
-    - practices/observation-plan.md
-    - practices/templates/
-  - Examples: examples/
+    - practices/NON_CANON.md
+    - Core Concepts:
+      - practices/practices/writing-intent.md
+      - practices/practices/defining-scope.md
+      - practices/practices/identifying-constraints.md
+      - practices/practices/kill-criteria.md
+      - practices/practices/recording-decisions.md
+    - Execution:
+      - practices/practices/execution-plan.md
+      - practices/practices/observation-plan.md
+    - Templates:
+      - practices/templates/CHANGE_PLAN.md
+      - practices/templates/INCIDENT.md
+  - Examples:
+    - examples/README.md
+    - examples/incident-to-replay.md
+    - examples/risky-change-constraints.md
+    - examples/post-incident-remediation.md
   - Governance:
     - governance/code_of_conduct.md
     - governance/security.md
     - governance/contributing.md
     - governance/license.md
     - governance/roadmap.md
+  - Setup:
+    - SUBMODULES.md
+    - LOCAL_DEVELOPMENT.md
+  - Change Planning:
+    - change-planning/2026-01-22-setup-cimpai-com/CHANGE_PLAN.md
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -70,11 +108,13 @@ markdown_extensions:
       alternate_style: true
   - attr_list
   - md_in_html
+  - nl2br
 
 plugins:
   - search
   - git-revision-date-localized:
       enable_creation_date: true
       fallback_to_build_date: true
+  - markdown_preprocessor
 
 strict: true

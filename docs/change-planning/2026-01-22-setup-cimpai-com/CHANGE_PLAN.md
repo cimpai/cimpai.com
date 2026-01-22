@@ -18,12 +18,14 @@ No marketing-heavy design. Documentation clarity first.
 ## Scope
 
 This change affects:
+
 - public documentation delivery
 - domain configuration (DNS + GitHub Pages)
 - licensing interpretation (docs-as-code)
 - contributor workflow via Cursor
 
 It does NOT affect:
+
 - runtime systems
 - production services
 - user data
@@ -206,6 +208,116 @@ At completion, the repository must:
 - be ready for GitHub Pages + custom domain
 - feel like infrastructure documentation, not a startup landing page
 
+## Problems encountered and decisions
+
+### Problem 1: Favicon not displaying
+
+**Problem:** Favicon configured in `mkdocs.yml` theme settings was not appearing in the browser.
+
+**Root cause:** MkDocs Material theme requires explicit HTML head tags for reliable favicon loading, especially for multiple formats (`.ico`, `.png`, `.svg`).
+
+**Decision:** Use HTML template override (`docs/overrides/main.html`) to explicitly add favicon links in the page head. This approach is more reliable than theme configuration alone.
+
+**Artifacts:**
+- `docs/overrides/main.html` — HTML template override with favicon links
+- `mkdocs.yml` — `custom_dir: docs/overrides` configuration
+
+### Problem 2: Markdown lists rendering on one line
+
+**Problem:** Lists immediately following text ending with `:` were rendering as a single line instead of proper bullet lists.
+
+**Root cause:** Markdown parsers require blank lines before lists to recognize them as list blocks. Many markdown files had lists directly following text without blank lines.
+
+**Initial approach:** Manually added blank lines to affected files across the project.
+
+**Initial solution attempt:** Created a preprocessor script to modify files before MkDocs processes them. However, this approach had issues:
+- Modified files on disk (including submodules, which should be read-only)
+- Required separate build step
+- Risk of accidentally modifying submodule files
+
+**Final decision:** Created a MkDocs plugin that processes markdown in memory during rendering. This approach:
+- Processes content in memory — no file modifications
+- Works for all files including submodules (read-only)
+- Automatically runs during `mkdocs serve` and `mkdocs build`
+- No separate build step required
+- Zero risk of modifying source files
+
+**Implementation:**
+- `mkdocs_plugin.py` — Plugin that uses `on_page_markdown` hook to process content in memory
+- `setup.py` — Registers plugin as entry point for MkDocs discovery
+- Plugin installed via `pip install -e .` (editable install)
+
+**Artifacts:**
+- `mkdocs_plugin.py` — In-memory markdown preprocessor plugin
+- `setup.py` — Plugin registration and installation
+- `scripts/preprocess_markdown.py` — Standalone script (kept for manual use, but not used in build)
+- `Makefile` — Simplified to just run `mkdocs serve` and `mkdocs build`
+- `.github/workflows/pages.yml` — Installs plugin package, no separate preprocessor step
+- `docs/LOCAL_DEVELOPMENT.md` — Updated with plugin installation instructions
+
+### Problem 3: Custom MkDocs plugin loading issues (resolved)
+
+**Problem:** Initial attempt to create a MkDocs plugin encountered "plugin is not installed" errors.
+
+**Root cause:** MkDocs requires plugins to be properly registered via setuptools entry points. Simply placing a plugin file in the project root is not sufficient.
+
+**Solution:** Created `setup.py` with proper entry point registration:
+```python
+entry_points={
+    "mkdocs.plugins": [
+        "markdown_preprocessor = mkdocs_plugin:MarkdownPreprocessorPlugin",
+    ]
+}
+```
+
+**Decision:** Plugin approach was successful after proper registration. The plugin is installed via `pip install -e .` (editable install), making it discoverable by MkDocs.
+
+**Benefits of plugin approach:**
+- Processes content in memory (no file modifications)
+- Works automatically during rendering
+- No separate build step required
+- Works for all files including submodules
+- Zero risk of modifying source files
+
+**Artifacts:**
+- `mkdocs_plugin.py` — In-memory markdown preprocessor plugin
+- `setup.py` — Plugin registration with entry points
+- `mkdocs.yml` — Plugin enabled: `markdown_preprocessor`
+
+### Problem 4: Custom directory path configuration
+
+**Problem:** Initial `custom_dir` configuration used incorrect path, causing "path does not exist" errors.
+
+**Root cause:** `custom_dir` in MkDocs is relative to the project root, not the `docs/` directory.
+
+**Decision:** Use `docs/overrides` as the path (relative to project root) for template overrides.
+
+**Artifacts:**
+- `mkdocs.yml` — `custom_dir: docs/overrides` configuration
+
+### Problem 5: Preprocessor modifying submodule files (resolved by plugin approach)
+
+**Problem:** Initial preprocessor script was modifying files in git submodules (`docs/docs/` and `docs/practices/`), which are read-only inputs.
+
+**Root cause:** File-based preprocessor script had to carefully detect and skip submodule directories, but risk of accidental modification remained.
+
+**Decision:** This problem was eliminated by switching to the in-memory plugin approach. The plugin processes content during rendering without touching files on disk, making it impossible to accidentally modify submodules.
+
+**Note:** The standalone preprocessor script (`scripts/preprocess_markdown.py`) still has submodule detection logic for manual use cases, but it's no longer part of the build pipeline.
+
+### Additional decisions
+
+**Branding customization:**
+- Applied CIMP branding guidelines (`docs/docs/BRANDING.md`) to theme configuration
+- Custom CSS (`docs/assets/extra.css`) for white header background
+- Neutral grey color scheme (no blue accents)
+- Minimal, infrastructure-focused styling
+
+**Preprocessor integration:**
+- Preprocessor runs automatically via Makefile for local development
+- Preprocessor runs in GitHub Actions before build step
+- Manual execution available when needed
+
 ## Why this change is documented via CIMP
 
 This change does not modify production code,
@@ -213,6 +325,7 @@ but it alters how intent, architecture, and governance
 are externalized and executed.
 
 Documenting it as a CHANGE_PLAN ensures:
+
 - reproducibility
 - tool-assisted execution
 - architectural memory

@@ -15,6 +15,7 @@ We take security seriously and will respond to reports promptly.
 ## Scope
 
 This policy applies to:
+
 - The CIMP framework documentation
 - CIMP practices and templates
 - The cimpai.com website

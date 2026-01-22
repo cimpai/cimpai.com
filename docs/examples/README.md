@@ -3,6 +3,7 @@
 This section contains concrete examples of CIMP applied to real changes.
 
 Each example demonstrates:
+
 - how Intent was defined
 - how Scope was bounded
 - how Constraints were identified

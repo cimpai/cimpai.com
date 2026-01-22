@@ -23,6 +23,7 @@ CIMP is under active development as an open framework.
 ## How Roadmap Evolves
 
 The roadmap reflects:
+
 - Community needs
 - Real-world application feedback
 - Governance decisions

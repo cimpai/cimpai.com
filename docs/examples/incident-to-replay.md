@@ -13,6 +13,7 @@ This example demonstrates a complete CIMP lifecycle: from incident discovery thr
 ## Change Plan
 
 Created `CHANGE_PLAN.md` with:
+
 - **Intent:** Fix calculation to count only valid records
 - **Scope:** Calculation logic only
 - **Constraints:** Historical data integrity must be preserved

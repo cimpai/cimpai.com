@@ -11,11 +11,13 @@ CIMP is licensed under the Apache License 2.0.
 ## What This Means
 
 You are free to:
+
 - Use CIMP in your projects
 - Modify and distribute CIMP
 - Use CIMP commercially
 
 You must:
+
 - Include the license and copyright notice
 - State significant changes made
 

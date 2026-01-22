@@ -26,6 +26,7 @@ Need to enforce uniqueness constraint on identifier field across entities, where
 ## Proposed Solution
 
 Create separate normalized table with PRIMARY KEY on identifier:
+
 - Database-level uniqueness enforcement
 - Normalized structure
 - Backward compatible with existing metadata

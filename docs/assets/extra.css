@@ -1,0 +1,89 @@
+/* Custom styles for CIMP documentation site */
+
+/* Fix list rendering when missing blank lines before lists */
+p + ul,
+p + ol {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+/* Ensure lists after colons render properly */
+p:has(+ ul),
+p:has(+ ol) {
+  margin-bottom: 0.5em;
+}
+
+/* Header with white background */
+.md-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+.md-header__inner {
+  background-color: #ffffff;
+}
+
+/* Ensure header text is readable on white background */
+.md-header__title {
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.md-header__button {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.md-header__button:hover {
+  color: rgba(0, 0, 0, 0.87);
+}
+
+/* Navigation tabs on white background */
+.md-tabs {
+  background-color: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+.md-tabs__link {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.md-tabs__link--active,
+.md-tabs__link:hover {
+  color: rgba(0, 0, 0, 0.87);
+}
+
+/* Dark mode adjustments */
+[data-md-color-scheme="slate"] .md-header {
+  background-color: #1e1e1e;
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-md-color-scheme="slate"] .md-header__inner {
+  background-color: #1e1e1e;
+}
+
+[data-md-color-scheme="slate"] .md-header__title {
+  color: rgba(255, 255, 255, 0.87);
+}
+
+[data-md-color-scheme="slate"] .md-header__button {
+  color: rgba(255, 255, 255, 0.54);
+}
+
+[data-md-color-scheme="slate"] .md-header__button:hover {
+  color: rgba(255, 255, 255, 0.87);
+}
+
+[data-md-color-scheme="slate"] .md-tabs {
+  background-color: #1e1e1e;
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-md-color-scheme="slate"] .md-tabs__link {
+  color: rgba(255, 255, 255, 0.54);
+}
+
+[data-md-color-scheme="slate"] .md-tabs__link--active,
+[data-md-color-scheme="slate"] .md-tabs__link:hover {
+  color: rgba(255, 255, 255, 0.87);
+}
+

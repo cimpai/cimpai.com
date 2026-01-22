@@ -11,6 +11,11 @@ env/
 venv/
 ENV/
 
+# Setuptools
+*.egg-info/
+dist/
+build/
+
 # IDE
 .vscode/
 .idea/
