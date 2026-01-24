@@ -55,6 +55,6 @@ It makes decisions **explicit and traceable**.
 ## Learn more
 
 - **[Documentation](docs/README.md)** — Core concepts, philosophy, and artifacts
-- **[Practices](practices/README.md)** — Applied patterns, playbooks, and templates
+- **[Practices](practices/README.md)** — Learning-derived practices and templates
 - **[GitHub Organization](https://github.com/cimpai)** — Source repositories
 
